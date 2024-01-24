@@ -1,15 +1,15 @@
-name: Node JS CI / CD
+# name: Node JS CI / CD
 
-on:
-  push:
-    branches:
-      - "master"
-jobs:
-  build:
-    runs-on: ubuntu:latest
-    steps:
-      - name: Checkout repository-1
-        uses: actions/checkout@v2
+# on:
+#   push:
+#     branches:
+#       - "master"
+# jobs:
+#   build:
+#     runs-on: ubuntu:latest
+#     steps:
+#       - name: Checkout repository-1
+#         uses: actions/checkout@v2
       # - name: Setup Node JS
       #   uses: actions/setup-node@v2
       #   with:
@@ -35,3 +35,51 @@ jobs:
       #   run: npm start
       #   env:
       #     NODE_ENV: production
+
+
+
+name: Node.js CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to production
+        run: npm start 
+        env:
+          NODE_ENV: production
