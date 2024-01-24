@@ -1,0 +1,11 @@
+# Use the official PostgreSQL image as the base image
+FROM postgres:latest
+
+# Set environment variables
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD P@ssw0rd
+# ENV POSTGRES_DB itemdb
+# ENV POSTGRES_DB testdb1
+ENV POSTGRES_DB productitemsdb
+# Copy the initialization script to initialize the database
+COPY init.sql /docker-entrypoint-initdb.d/
